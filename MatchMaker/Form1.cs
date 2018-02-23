@@ -23,6 +23,29 @@ namespace MatchMaker
 
             // Initialize global list of Trials
             trialsList = new List<Trial>();
+
+            // Welcome message in tbDisplay
+            DisplayUpdate("Welcome to MatchMaker!"
+                + "\r\n\r\n\r\n" + "Step 1: Select the directory in which you have placed *.txt files"
+                + "\r\n\r\n" + "Step 2 (optional): Change the ouput directory, if different from input"
+                + "\r\n\r\n" + "Step 3: Enter the number of trials needed to run"
+                + "\r\n\r\n" + "Step 4: Press 'Run Analysis' button"
+                + "\r\n\r\n\r\n" + "Sample Run:"
+                + "\r\n\r\n\t" + "24 Files"
+                + "\r\n\t" + "1000 Trials"
+                + "\r\n\t" + "Total Time: ~19 mins", false);
+        }
+
+        private void DisplayUpdate(string message, bool append)
+        {
+            if (append)
+            {
+                tbDisplay.Text += message;
+            }
+            else
+            {
+                tbDisplay.Text = message;
+            }
         }
 
         private void btnBrowseInput_Click(object sender, EventArgs e)
