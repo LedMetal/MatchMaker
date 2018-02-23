@@ -40,5 +40,19 @@ namespace MatchMaker
                 tbFilesFound.Text = Directory.GetFiles(folderDialog.SelectedPath).Length.ToString();
             }
         }
+
+        private void btnBrowseOutput_Click(object sender, EventArgs e)
+        {
+            // Create FolderBrowserDialog object
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            // Create DialogResult object that reads the user's input from the dialog
+            DialogResult diagResult = dialog.ShowDialog();
+
+            if (diagResult == DialogResult.OK)
+            {
+                // Display selected path in read-only textbox
+                tbOutputDirectory.Text = dialog.SelectedPath;
+            }
+        }
     }
 }
