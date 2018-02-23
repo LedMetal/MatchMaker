@@ -88,6 +88,7 @@
             this.btnRunExperiment.TabIndex = 33;
             this.btnRunExperiment.Text = "Run Analysis";
             this.btnRunExperiment.UseVisualStyleBackColor = true;
+            this.btnRunExperiment.Click += new System.EventHandler(this.btnRunExperiment_Click);
             // 
             // label8
             // 
