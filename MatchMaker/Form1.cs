@@ -203,6 +203,11 @@ namespace MatchMaker
                 // Randomly select a trial to print all records of
                 int random = randomGenerator.Next(0, trialsList.Count);
 
+                // Print (Save) randomly selected trial to Excel file
+                PrintTrial(random);
+
+                // Print master Excel file, with each trial's average percent similarity and standard deviation
+                PrintMaster();
             }
 
         }
@@ -289,6 +294,65 @@ namespace MatchMaker
             }
         }
 
+        // Saves (as .xls) master file
+        void PrintMaster()
+        {
+            DisplayUpdate("\r\n\r\nWriting Master File...\r\n\r\n", true);
+
+            // Initialize Excel Application Object
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            // Check if Excel is properly installed on current system
+            if (xlApp == null)
+            {
+                MessageBox.Show("Error Loading Excel Application", "Microsoft Excel must be fully installed on this system in order to use the output function. Please check your installation of Microsoft Office and try again.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                int row = 1;
+                int col = 1;
+                string saveDirectory = tbOutputDirectory.Text + "\\Output";
+
+                // Create new Excel WorkBook
+                Workbook xlWorkbook = xlApp.Workbooks.Add();
+
+                // Rename "Sheet1" to something more appropriate
+                Worksheet experimentWorksheet = (Worksheet)xlWorkbook.Worksheets[1];
+                experimentWorksheet.Name = "Analysis Overview";
+
+                // Write Trial Average Percent Similarity
+                experimentWorksheet.Cells[row, col] = "Average Percent Similarity";
+                col++;
+                // Write Trial Standard Deviation
+                experimentWorksheet.Cells[row, col] = "Standard Deviation";
+                row++;
+                col = 1;
+
+                // Loop through the Trials in global trials list
+                for (int i = 0; i < trialsList.Count; i++)
+                {
+                    experimentWorksheet.Cells[row, col] = trialsList[i].TrialAverageSimilarity;
+                    col++;
+                    experimentWorksheet.Cells[row, col] = trialsList[i].TrialStandardDeviation;
+                    row++;
+                    col = 1;
+                }
+
+                DisplayUpdate("\r\nCompleted Writing Master File", true);
+
+                if (!Directory.Exists(saveDirectory))
+                {
+                    // Create subdirectory for Trial
+                    Directory.CreateDirectory(saveDirectory);
+                }
+                // Save Excel Workbook
+                xlWorkbook.SaveAs(saveDirectory + "\\Master_Analysis_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xls", XlFileFormat.xlWorkbookNormal, null, null, null, null, XlSaveAsAccessMode.xlExclusive, null, null, null, null, null);
+                // Quit Excel App
+                xlApp.Quit();
+
+                DisplayUpdate("\r\n\r\nDone!", true);
+            }
+        }
 
         void DisplayUpdate(string message, bool append)
         {
