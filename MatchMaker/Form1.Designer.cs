@@ -187,6 +187,7 @@
             this.btnBrowseInput.TabIndex = 22;
             this.btnBrowseInput.Text = "Browse...";
             this.btnBrowseInput.UseVisualStyleBackColor = true;
+            this.btnBrowseInput.Click += new System.EventHandler(this.btnBrowseInput_Click);
             // 
             // label2
             // 
