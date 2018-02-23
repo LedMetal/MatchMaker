@@ -71,6 +71,28 @@ namespace MatchMaker
         {
             // Clear global list of Trials
             trialsList.Clear();
+
+            // Validate that files directory is selected and number of Trials legally specified
+            if (tbSelectedDirectory.Text == String.Empty)
+            {
+                MessageBox.Show("Please select the directory in which the *.txt files are contained", "Missing Files Directory", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (tbTrials.Text == String.Empty)
+            {
+                MessageBox.Show("Please specify how many trials are to be run in the experiment", "Missing Number Of Trials", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbTrials.Focus();
+            }
+            else if (!int.TryParse(tbTrials.Text, out int numberOfTrials))
+            {
+                MessageBox.Show("Please enter a valid integer value for number of trials", "Invalid Number Of Trials Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbTrials.Focus();
+                tbTrials.SelectAll();
+            }
+            else
+            {
+
+            }
+
         }
     }
 }
