@@ -1,4 +1,5 @@
 ﻿using MatchMaker.bus;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -205,6 +206,89 @@ namespace MatchMaker
             }
 
         }
+
+        // Saves (as .xls) all records of given Trial
+        void PrintTrial(int trialNumber)
+        {
+            DisplayUpdate("\r\nWriting Trial " + trialNumber + " to Excel file ...\r\n\r\n", true);
+
+            // Initialize Excel Application Object
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            // Check if Excel is properly installed on current system
+            if (xlApp == null)
+            {
+                MessageBox.Show("Error Loading Excel Application", "Microsoft Excel must be fully installed on this system in order to use the output function. Please check your installation of Microsoft Office and try again.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                string saveDirectory = tbOutputDirectory.Text + "\\Output";
+
+                // Create new Excel WorkBook
+                Workbook xlWorkbook = xlApp.Workbooks.Add();
+
+                // Rename "Sheet1" to something more appropriate
+                Worksheet trialWorksheet = (Worksheet)xlWorkbook.Worksheets[1];
+                trialWorksheet.Name = "Trial " + trialNumber;
+
+                // Write Trial Average Percent Similarity
+                trialWorksheet.Cells[1, 1] = "Trial Average Percent Similarity";
+                trialWorksheet.Cells[1, 2] = trialsList[trialNumber].TrialAverageSimilarity;
+
+                // Write Trial Standard Deviation on Trial Sheet
+                trialWorksheet.Cells[2, 1] = "Trial Standard Deviation";
+                trialWorksheet.Cells[2, 2] = trialsList[trialNumber].TrialStandardDeviation;
+
+                // Loop through the SubTrials in Trial object
+                for (int i = 0; i < trialsList[trialNumber].SubTrialsList.Count; i++)
+                {
+                    // Create new Worksheet and name it appropriate to its corresponding SubTrial
+                    Worksheet newWorksheet = (Worksheet)xlWorkbook.Worksheets.Add();
+                    newWorksheet.Name = "SubTrial " + (i + 1);
+
+                    // Write table headers
+                    newWorksheet.Cells[1, 1] = "Root Number";
+                    newWorksheet.Cells[1, 2] = "Random Number";
+                    newWorksheet.Cells[1, 3] = "Percent Similarity";
+
+                    int row = 2;
+                    int col = 1;
+
+                    // Loop through the SubTrial's list of Pairings to write
+                    for (int z = 0; z < trialsList[trialNumber].SubTrialsList[i].SubTrialPairings.Count; z++)
+                    {
+                        col = 1;
+                        newWorksheet.Cells[row, col] = trialsList[trialNumber].SubTrialsList[i].SubTrialPairings[z].RootNumber;
+                        col++;
+                        newWorksheet.Cells[row, col] = trialsList[trialNumber].SubTrialsList[i].SubTrialPairings[z].RandomNumber;
+                        col++;
+                        newWorksheet.Cells[row, col] = trialsList[trialNumber].SubTrialsList[i].SubTrialPairings[z].SimilarityPercent;
+                        row++;
+                    }
+
+                    newWorksheet.Cells[2, 5] = "SubTrial Average Similarity";
+                    newWorksheet.Cells[2, 6] = trialsList[trialNumber].SubTrialsList[i].SubTrialAverageSimilarity;
+
+                    DisplayUpdate("Completed Writing SubTrial " + (i + 1) + "...\r\n", true);
+                }
+
+                // If the Output directory does not exist, create it
+                if (!Directory.Exists(saveDirectory))
+                {
+                    // Create subdirectory for Trial
+                    Directory.CreateDirectory(saveDirectory);
+                }
+
+                // Save Excel Workbook
+                xlWorkbook.SaveAs(saveDirectory + "\\Trial" + trialNumber + "_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xls", XlFileFormat.xlWorkbookNormal, null, null, null, null, XlSaveAsAccessMode.xlExclusive, null, null, null, null, null);
+
+                // Quit Excel App
+                xlApp.Quit();
+
+                DisplayUpdate("Done!", true);
+            }
+        }
+
 
         void DisplayUpdate(string message, bool append)
         {
