@@ -20,6 +20,11 @@ namespace MatchMaker
 
         private void btnBrowseInput_Click(object sender, EventArgs e)
         {
+            BrowseInputDirectory();
+        }
+
+        private void BrowseInputDirectory()
+        {
             // Create FolderBrowserDialog object
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             // Create DialogResult object that reads the user's input from the dialog
