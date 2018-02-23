@@ -110,5 +110,31 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="sample_data\CSF10_Pitch.txt" />
+    <Content Include="sample_data\CSF11_Pitch.txt" />
+    <Content Include="sample_data\CSF12_Pitch.txt" />
+    <Content Include="sample_data\CSF13_Pitch.txt" />
+    <Content Include="sample_data\CSF14_Pitch.txt" />
+    <Content Include="sample_data\CSF15_Pitch.txt" />
+    <Content Include="sample_data\CSF16_Pitch.txt" />
+    <Content Include="sample_data\CSF17_Pitch.txt" />
+    <Content Include="sample_data\CSF18_Pitch.txt" />
+    <Content Include="sample_data\CSF1_Pitch.txt" />
+    <Content Include="sample_data\CSF2_Pitch.txt" />
+    <Content Include="sample_data\CSF3_Pitch.txt" />
+    <Content Include="sample_data\CSF4_Pitch.txt" />
+    <Content Include="sample_data\CSF5_Pitch.txt" />
+    <Content Include="sample_data\CSF6_Pitch.txt" />
+    <Content Include="sample_data\CSF7_Pitch.txt" />
+    <Content Include="sample_data\CSF8_Pitch.txt" />
+    <Content Include="sample_data\CSF9_Pitch.txt" />
+    <Content Include="sample_data\CSM1_Pitch.txt" />
+    <Content Include="sample_data\CSM2_Pitch.txt" />
+    <Content Include="sample_data\CSM3_Pitch.txt" />
+    <Content Include="sample_data\CSM4_Pitch.txt" />
+    <Content Include="sample_data\CSM5_Pitch.txt" />
+    <Content Include="sample_data\CSM6_Pitch.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
