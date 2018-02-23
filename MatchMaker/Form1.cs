@@ -23,6 +23,11 @@ namespace MatchMaker
             BrowseInputDirectory();
         }
 
+        private void btnBrowseOutput_Click(object sender, EventArgs e)
+        {
+            BrowseOutputDirectory();
+        }
+
         private void BrowseInputDirectory()
         {
             // Create FolderBrowserDialog object
@@ -38,6 +43,20 @@ namespace MatchMaker
 
                 // Display number of files found
                 tbFilesFound.Text = Directory.GetFiles(folderDialog.SelectedPath).Length.ToString();
+            }
+        }
+
+        private void BrowseOutputDirectory()
+        {
+            // Create FolderBrowserDialog object
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            // Create DialogResult object that reads the user's input from the dialog
+            DialogResult diagResult = folderDialog.ShowDialog();
+
+            if (diagResult == DialogResult.OK)
+            {
+                // Display selected path in read-only textbox
+                tbOutputDirectory.Text = folderDialog.SelectedPath;
             }
         }
     }

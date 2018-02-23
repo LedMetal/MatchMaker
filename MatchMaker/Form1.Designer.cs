@@ -161,6 +161,7 @@
             this.btnBrowseOutput.TabIndex = 25;
             this.btnBrowseOutput.Text = "Browse...";
             this.btnBrowseOutput.UseVisualStyleBackColor = true;
+            this.btnBrowseOutput.Click += new System.EventHandler(this.btnBrowseOutput_Click);
             // 
             // tbSelectedDirectory
             // 
