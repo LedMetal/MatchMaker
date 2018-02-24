@@ -53,38 +53,6 @@ namespace MatchMaker
             BrowseOutputDirectory();
         }
 
-        private void BrowseInputDirectory()
-        {
-            // Create FolderBrowserDialog object
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-            // Create DialogResult object that reads the user's input from the dialog
-            DialogResult diagResult = folderDialog.ShowDialog();
-
-            if (diagResult == DialogResult.OK)
-            {
-                // Display selected path in read-only textboxes
-                tbSelectedDirectory.Text = folderDialog.SelectedPath;
-                tbOutputDirectory.Text = folderDialog.SelectedPath;
-
-                // Display number of files found
-                tbFilesFound.Text = Directory.GetFiles(folderDialog.SelectedPath).Length.ToString();
-            }
-        }
-
-        private void BrowseOutputDirectory()
-        {
-            // Create FolderBrowserDialog object
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-            // Create DialogResult object that reads the user's input from the dialog
-            DialogResult diagResult = folderDialog.ShowDialog();
-
-            if (diagResult == DialogResult.OK)
-            {
-                // Display selected path in read-only textbox
-                tbOutputDirectory.Text = folderDialog.SelectedPath;
-            }
-        }
-
         private void btnRunExperiment_Click(object sender, EventArgs e)
         {
             // Clear global list of Trials
@@ -210,6 +178,38 @@ namespace MatchMaker
                 PrintMaster();
             }
 
+        }
+
+        private void BrowseInputDirectory()
+        {
+            // Create FolderBrowserDialog object
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            // Create DialogResult object that reads the user's input from the dialog
+            DialogResult diagResult = folderDialog.ShowDialog();
+
+            if (diagResult == DialogResult.OK)
+            {
+                // Display selected path in read-only textboxes
+                tbSelectedDirectory.Text = folderDialog.SelectedPath;
+                tbOutputDirectory.Text = folderDialog.SelectedPath;
+
+                // Display number of files found
+                tbFilesFound.Text = Directory.GetFiles(folderDialog.SelectedPath).Length.ToString();
+            }
+        }
+
+        private void BrowseOutputDirectory()
+        {
+            // Create FolderBrowserDialog object
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            // Create DialogResult object that reads the user's input from the dialog
+            DialogResult diagResult = folderDialog.ShowDialog();
+
+            if (diagResult == DialogResult.OK)
+            {
+                // Display selected path in read-only textbox
+                tbOutputDirectory.Text = folderDialog.SelectedPath;
+            }
         }
 
         // Saves (as .xls) all records of given Trial
